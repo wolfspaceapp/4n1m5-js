@@ -307,6 +307,12 @@ function playEpisode(seasonIdx, epNum, animate = false, isAutoAdvance = false) {
     if (epListEl) epListEl.style.display = 'none';
     if (seasonsWrapEl) seasonsWrapEl.style.display = 'none';
     
+    // Mostrar el reproductor completo (wrap y footer)
+    const playerWrap = $('player-wrap');
+    const playerFooter = $('player-footer');
+    if (playerWrap) playerWrap.style.display = '';
+    if (playerFooter) playerFooter.style.display = '';
+    
     const sHeader = $('serie-header');
     const playerHeader = document.getElementById('player-header');
     // Siempre ocultar el serie-header y mostrar el player-header
@@ -421,6 +427,25 @@ function closePlayer() {
         return;
     }
 
+    // Si no hay episodio cargado, volver a la sección de detalles
+    if (!currentEpisode) {
+        const detailSection = document.getElementById('serie-detail-section');
+        const playerHeader = document.getElementById('player-header');
+        const playerWrap = $('player-wrap');
+        const playerFooter = $('player-footer');
+        const seasonsWrap = document.querySelector('.seasons-wrap');
+        const episodesList = $('episodes-list');
+        
+        if (detailSection) detailSection.style.display = 'block';
+        if (playerHeader) playerHeader.style.display = 'none';
+        if (playerWrap) playerWrap.style.display = 'none';
+        if (playerFooter) playerFooter.style.display = 'none';
+        if (seasonsWrap) seasonsWrap.style.display = 'none';
+        if (episodesList) episodesList.style.display = 'none';
+        return;
+    }
+
+    // Si hay episodio cargado, volver a la lista de episodios
     $('player-section').style.display = 'none';
     $('episodes-list').style.display = '';
     document.querySelector('.seasons-wrap').style.display = 'block';
